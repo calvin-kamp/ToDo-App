@@ -23,6 +23,8 @@ export const useTodoStore = defineStore('todo', () => {
             }
             const data = await response.json();
             todos.value = data;
+
+            console.log(data);
         } catch (err) {
             throw Error;
         } finally {
