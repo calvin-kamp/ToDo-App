@@ -12,7 +12,7 @@ const description = ref<HTMLInputElement>();
 
 const submitForm = async () => {
     try {
-        const response = await axios.post('http://twntysmth.io/add-todo.php', {
+        const response = await axios.post('https://twntysmth.io/php/add-todo.php', {
             title: title.value,
             description: description?.value
         });
