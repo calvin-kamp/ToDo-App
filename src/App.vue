@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useTodoStore } from '@/stores/todo';
 import axios from 'axios';
@@ -20,6 +20,10 @@ const submitForm = async () => {
         throw error;
     }
 };
+
+onMounted(() => {
+    todoStore.fetchTodos;
+});
 </script>
 
 <template>
@@ -43,29 +47,4 @@ const submitForm = async () => {
             </li>
         </ul>
     </main>
-
-    <!--
-    <div class="">
-        <div>
-            <input ref="title" type="text" name="todo-title" />
-            <input ref="description" type="text" name="todo-description" />
-
-            <button @click="todoStore.addTodo({ title: title?.value, description: description?.value })">
-                add todo
-            </button>
-        </div>
-
-        <ul>
-            <li v-for="todo in todos">
-                <strong style="display: block">
-                    {{ todo.title }}
-                </strong>
-
-                <small v-if="todo?.description" style="display: block">
-                    {{ todo.description }}
-                </small>
-            </li>
-        </ul>
-    </div>
-    -->
 </template>
