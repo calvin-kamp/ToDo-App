@@ -11,5 +11,30 @@ export const useTodoStore = defineStore('todo', () => {
         }
     }
 
-    return { todos, addTodo };
+    const loading = ref(false);
+    const error = ref(null);
+
+    const fetchTodos = async () => {
+        try {
+            loading.value = true;
+            const response = await fetch('https://twntysmth.io/php/get-todos.php');
+            if (!response.ok) {
+                throw new Error('Failed to fetch todos');
+            }
+            const data = await response.json();
+            todos.value = data;
+        } catch (err) {
+            throw Error;
+        } finally {
+            loading.value = false;
+        }
+    };
+
+    return {
+        todos,
+        addTodo,
+        loading,
+        error,
+        fetchTodos
+    };
 });
