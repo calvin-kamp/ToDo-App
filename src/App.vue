@@ -16,6 +16,8 @@ const submitForm = async () => {
             title: title.value,
             description: description?.value
         });
+
+        todoStore.fetchTodos();
     } catch (error) {
         throw error;
     }
