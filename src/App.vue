@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useTodoStore } from '@/stores/todo';
 import axios from 'axios';
@@ -20,10 +20,6 @@ const submitForm = async () => {
         throw error;
     }
 };
-
-onMounted(() => {
-    todoStore.fetchTodos;
-});
 </script>
 
 <template>

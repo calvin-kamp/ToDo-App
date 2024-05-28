@@ -32,6 +32,8 @@ export const useTodoStore = defineStore('todo', () => {
         }
     };
 
+    fetchTodos();
+
     return {
         todos,
         addTodo,
