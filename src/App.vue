@@ -7,14 +7,14 @@ import axios from 'axios';
 const todoStore = useTodoStore();
 const { todos } = storeToRefs(todoStore);
 
-const titleInput = ref<HTMLInputElement>();
-const descriptionInput = ref<HTMLInputElement>();
+const title = ref<HTMLInputElement>();
+const description = ref<HTMLInputElement>();
 
 const submitForm = async () => {
     try {
-        const response = await axios.post('https://to-do-app-nine-lyart.vercel.app/php/add-todo.php', {
-            title: titleInput.value,
-            description: descriptionInput?.value
+        const response = await axios.post('http://twntysmth.io/add-todo.php', {
+            title: title.value,
+            description: description?.value
         });
     } catch (error) {
         throw error;
@@ -25,15 +25,10 @@ const submitForm = async () => {
 <template>
     <main>
         <form action="" @submit.prevent="submitForm" method="post">
-            <input ref="titleInput" type="text" name="todo-title" />
-            <input ref="descriptionInput" type="text" name="todo-description" />
+            <input v-model="title" type="text" name="todo-title" />
+            <input v-model="description" type="text" name="todo-description" />
 
-            <button
-                @click="
-                    todoStore.addTodo({ title: titleInput?.value, description: descriptionInput?.value })
-                ">
-                add todo
-            </button>
+            <button type="submit">add todo</button>
         </form>
 
         <ul>
