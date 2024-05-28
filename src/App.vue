@@ -1,85 +1,76 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useTodoStore } from '@/stores/todo';
+import axios from 'axios';
+
+const todoStore = useTodoStore();
+const { todos } = storeToRefs(todoStore);
+
+const titleInput = ref<HTMLInputElement>();
+const descriptionInput = ref<HTMLInputElement>();
+
+const submitForm = async () => {
+    try {
+        const response = await axios.post('https://todo-app.twntysmth.io/php/add-todo.php', {
+            title: titleInput.value,
+            description: descriptionInput?.value
+        });
+    } catch (error) {
+        throw error;
+    }
+};
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <main>
+        <form action="" @submit.prevent="submitForm" method="post">
+            <input ref="titleInput" type="text" name="todo-title" />
+            <input ref="descriptionInput" type="text" name="todo-description" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+            <button
+                @click="
+                    todoStore.addTodo({ title: titleInput?.value, description: descriptionInput?.value })
+                ">
+                add todo
+            </button>
+        </form>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+        <ul>
+            <li v-for="todo in todos">
+                <strong style="display: block">
+                    {{ todo.title }}
+                </strong>
+
+                <small v-if="todo?.description" style="display: block">
+                    {{ todo.description }}
+                </small>
+            </li>
+        </ul>
+    </main>
+
+    <!--
+    <div class="">
+        <div>
+            <input ref="title" type="text" name="todo-title" />
+            <input ref="description" type="text" name="todo-description" />
+
+            <button @click="todoStore.addTodo({ title: title?.value, description: description?.value })">
+                add todo
+            </button>
+        </div>
+
+        <ul>
+            <li v-for="todo in todos">
+                <strong style="display: block">
+                    {{ todo.title }}
+                </strong>
+
+                <small v-if="todo?.description" style="display: block">
+                    {{ todo.description }}
+                </small>
+            </li>
+        </ul>
     </div>
-  </header>
-
-  <RouterView />
+    -->
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>

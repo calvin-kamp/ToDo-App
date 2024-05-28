@@ -1,24 +1,19 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.vitest.json"
+    "files": [],
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        },
+        {
+            "path": "./tsconfig.app.json"
+        },
+        {
+            "path": "./tsconfig.vitest.json"
+        }
+    ],
+    "compilerOptions": {
+        "module": "NodeNext",
+        "noEmit": true,
+        "allowImportingTsExtensions": true
     }
-  ],
-  "compilerOptions": {
-    "module": "NodeNext",
-    "baseUrl": ".",
-    "paths": {
-      "@assets/*": ["src/assets/*"],
-      "@styles/*": ["src/styles/*"],
-      "@stores/*": ["src/stores/*"],
-      "@components/*": ["src/components/*"]
-    }
-  }
 }
